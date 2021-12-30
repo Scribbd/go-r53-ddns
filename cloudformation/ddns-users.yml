@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  CloudFormation template for the IAM user for r53-DDNS cronjob
+
+Parameters:
+  HostedZoneARN:
+    Type: String
+    Default: arn:aws:route53:::hostedzone/Z00284422N70TQP6B6C1
+  AWSUserName:
+    Type: String
+    Default: RemoteR53DDNS
+
+
+Resources:
+# DDNS user and policy
+  DDNSPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      ManagedPolicyName: ddns-policy
+      Description: A managed policy for updating the A records in scribbd.cloud
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:
+              - route53:GetHostedZone
+              - route53:ChangeResourceRecordSets
+              - route53:ListResourceRecordSets
+            Resource:
+              - !Ref HostedZoneARN
+
+  R53User:
+    Type: AWS::IAM::User
+    Properties:
+      UserName: !Ref AWSUserName
+      ManagedPolicyArns:
+        - !Ref DDNSPolicy
