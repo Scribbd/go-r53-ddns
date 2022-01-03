@@ -3,9 +3,10 @@ name: Tag Push = Build Publish
 
 on:
   push:
-    branches: [ $default-branch ]
+    branches: 
+      - $default-branch
     tags:
-      - [ 'v*.*.*' ]
+      - 'v*.*.*'
 
 jobs:
   docker:
