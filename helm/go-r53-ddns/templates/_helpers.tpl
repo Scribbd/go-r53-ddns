@@ -2,7 +2,7 @@
 Expand the name of the chart.
 */}}
 {{- define "go-r53-ddns.name" -}}
-{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
+{{- default .Chart.Name .Values.nameOverride | trunc 50 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
@@ -18,7 +18,7 @@ If release name contains chart name it will be used as a full name.
 {{- if contains $name .Release.Name }}
 {{- .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- else }}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" }}
+{{- printf "%s-%s" .Release.Name $name | trunc 50 | trimSuffix "-" }}
 {{- end }}
 {{- end }}
 {{- end }}
@@ -59,4 +59,12 @@ Create the name of the service account to use
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
+{{- end }}
+
+
+{{/*
+Create value key-pairs for 
+*/}}
+{{- define "go-r53-ddns.secretGen" -}}
+
 {{- end }}

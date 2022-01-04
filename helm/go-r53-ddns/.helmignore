@@ -10,6 +10,7 @@
 .hg/
 .hgignore
 .svn/
+.github/
 # Common backup files
 *.swp
 *.bak
@@ -21,3 +22,10 @@
 .idea/
 *.tmproj
 .vscode/
+
+#Project specific
+LICENSE
+GOALS.md
+Dockerfile
+README.md
+WORKENV.md

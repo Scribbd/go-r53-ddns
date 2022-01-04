@@ -1,27 +1,53 @@
 # Default values for go-r53-ddns.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: nginx
+  repository: scribbd/go-r53-ddns
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
   tag: ""
+
+cronConf:
+  apiVersion: batch/v1
+  schedule: "0 */8 * * *"
+  env:
+    - key: IP_API_SOURCE
+      value: "https://checkip.amazonaws.com"
+    - key: CLUSTER_DOMAIN
+      value: ""
+    - key: HOSTED_ZONE_ID
+      value: ""
+
+secretKeyRef:
+  - key: AWS_ACCESS_KEY_ID
+    from:
+      key: awsApiAccessKeyId
+      secret: ""
+  - key: AWS_SECRET_ACCESS_KEY
+    from:
+      key: awsSecretAccessKey
+      secret: ""
+  - key: AWS_SESSION_TOKEN
+    from:
+      key: awsSessionToken
+      secret: ""
+
+secretConf:
+  generate: false
+  name: ""
+  apiVersion: v1
+  secrets:
+    - key: awsApiAccessKeyId
+      value: test
+    - key: awsSecretAccessKey
+      value: test
+    - key: awsSessionToken
+      value: test
+
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
-
-serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # Annotations to add to the service account
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: ""
 
 podAnnotations: {}
 
@@ -36,26 +62,6 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-service:
-  type: ClusterIP
-  port: 80
-
-ingress:
-  enabled: false
-  className: ""
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: chart-example.local
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
-
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
@@ -67,13 +73,6 @@ resources: {}
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
-
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
 
 nodeSelector: {}
 

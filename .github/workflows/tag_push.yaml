@@ -9,7 +9,7 @@ on:
       - 'v*.*.*'
 
 jobs:
-  docker:
+  build-container:
     runs-on: ubuntu-latest
     env:
       DOCKER_NAMESPACE: scribbd
@@ -54,7 +54,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-  executable:
+  build-executable:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -74,3 +74,6 @@ jobs:
         goarch: ${{ matrix.goarch }}
         extra_files: LICENCE README.md
         project_path: ./golang/
+
+#  update-helm:
+#    runs-on:
