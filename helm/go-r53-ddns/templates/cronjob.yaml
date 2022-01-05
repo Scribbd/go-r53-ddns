@@ -8,8 +8,7 @@ spec:
   schedule: {{ .Values.cronConf.schedule }}
   jobTemplate:
     metadata:
-      name: 
-        labels: {{ include "go-r53-ddns.name" . }}-jobTemplate
+      name: {{ include "go-r53-ddns.name" . }}-jobTemplate
       labels:
         {{- include "go-r53-ddns.labels" . | nindent 8 }}
     spec:
@@ -19,12 +18,13 @@ spec:
           labels:
             {{- include "go-r53-ddns.labels" . | nindent 12 }}
         spec:
+          restartPolicy: {{ .Values.cronConf.restartPolicy }}
+          automountServiceAccountToken: false
           containers:
             - name: {{ .Chart.Name }}
               image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
               imagePullPolicy: {{ .Values.image.pullPolicy }}
-              command:
-
+              command: {{ .Values.cronConf.command }}
               resources:
                 {{- toYaml .Values.resources | nindent 16 }}
 

@@ -10,6 +10,8 @@ image:
 cronConf:
   apiVersion: batch/v1
   schedule: "0 */8 * * *"
+  command: ""
+  restartPolicy: OnFailure
   env:
     - key: IP_API_SOURCE
       value: "https://checkip.amazonaws.com"
@@ -26,13 +28,13 @@ cronConf:
       from:
         key: awsSecretAccessKey
         secret: go-r53-ddns-secret
-    - key: AWS_SESSION_TOKEN
-      from:
-        key: awsSessionToken
-        secret: go-r53-ddns-secret
+    # - key: AWS_SESSION_TOKEN
+    #   from:
+    #     key: awsSessionToken
+    #     secret: go-r53-ddns-secret
 
 secretConf:
-  deploy: false
+  deploy: true
   name: go-r53-ddns-secret
   apiVersion: v1
   secrets:
@@ -40,8 +42,8 @@ secretConf:
       value: ""
     - key: awsSecretAccessKey
       value: ""
-    - key: awsSessionToken
-      value: ""
+    # - key: awsSessionToken
+    #   value: ""
 
 imagePullSecrets: []
 nameOverride: ""

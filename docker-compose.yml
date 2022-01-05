@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  ddns-job:
+    image: scribbd/go-r53-ddns:v0.1.1
+    environment:
+      - HOSTED_ZONE_ID=Z00284422N70TQP6B6C1
+      - CLUSTER_DOMAIN=cluster.scribbd.cloud.
+      - AWS_ACCESS_KEY_ID=
+      - AWS_SECRET_ACCESS_KEY=
+    command: "/app/ddns"
