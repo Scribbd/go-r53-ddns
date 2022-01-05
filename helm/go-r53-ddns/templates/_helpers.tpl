@@ -61,10 +61,25 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
+{{/*
+Create value key-pairs for Secrets in the JobTemplate
+*/}}
+{{- define "go-r53-ddns.envFromSecretGen" -}}
+{{- range $_,$value := .Values.cronConf.envFromSecret }}
+- name: {{ $value.key | upper | quote }}
+  valueFrom:
+    secretKeyRef:
+      name: {{ required (cat "Secret Reference is require for " $value.key ) $value.from.secret | quote }}
+      key: {{ required (cat "Key is require for " $value.key ) $value.from.key | quote }}
+{{- end }}
+{{- end }}
 
 {{/*
-Create value key-pairs for 
+Create value key-pairs for environment variables in the JobTemplate
 */}}
-{{- define "go-r53-ddns.secretGen" -}}
-
+{{- define "go-r53-ddns.envGen" -}}
+{{- range $_,$value := . }}
+- name: {{ $value.key | upper | quote }}
+  value: {{ required "All environment values must be set." $value.value | quote }}
+{{- end }}
 {{- end }}

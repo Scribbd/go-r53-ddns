@@ -17,33 +17,31 @@ cronConf:
       value: ""
     - key: HOSTED_ZONE_ID
       value: ""
-
-secretKeyRef:
-  - key: AWS_ACCESS_KEY_ID
-    from:
-      key: awsApiAccessKeyId
-      secret: ""
-  - key: AWS_SECRET_ACCESS_KEY
-    from:
-      key: awsSecretAccessKey
-      secret: ""
-  - key: AWS_SESSION_TOKEN
-    from:
-      key: awsSessionToken
-      secret: ""
+  envFromSecret:
+    - key: AWS_ACCESS_KEY_ID
+      from:
+        key: awsApiAccessKeyId
+        secret: go-r53-ddns-secret
+    - key: AWS_SECRET_ACCESS_KEY
+      from:
+        key: awsSecretAccessKey
+        secret: go-r53-ddns-secret
+    - key: AWS_SESSION_TOKEN
+      from:
+        key: awsSessionToken
+        secret: go-r53-ddns-secret
 
 secretConf:
-  generate: false
-  name: ""
+  deploy: false
+  name: go-r53-ddns-secret
   apiVersion: v1
   secrets:
     - key: awsApiAccessKeyId
-      value: test
+      value: ""
     - key: awsSecretAccessKey
-      value: test
+      value: ""
     - key: awsSessionToken
-      value: test
-
+      value: ""
 
 imagePullSecrets: []
 nameOverride: ""

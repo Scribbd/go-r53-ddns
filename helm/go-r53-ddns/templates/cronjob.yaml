@@ -1,7 +1,7 @@
 apiVersion: {{ .Values.cronConf.apiVersion }}
 kind: CronJob
 metadata:
-  name: {{ include "go-r53-ddns.fullname" . }}-cronjob
+  name: {{ include "go-r53-ddns.name" . }}-cronjob
   labels:
     {{- include "go-r53-ddns.labels" . | nindent 4 }}
 spec:
@@ -9,13 +9,13 @@ spec:
   jobTemplate:
     metadata:
       name: 
-        labels: {{ include "go-r53-ddns.fullname" . }}-jobTemplate
+        labels: {{ include "go-r53-ddns.name" . }}-jobTemplate
       labels:
         {{- include "go-r53-ddns.labels" . | nindent 8 }}
     spec:
       template:
         metadata:
-          name: {{ include "go-r53-ddns.fullname" . }}-job
+          name: {{ include "go-r53-ddns.name" . }}-job
           labels:
             {{- include "go-r53-ddns.labels" . | nindent 12 }}
         spec:
@@ -29,17 +29,8 @@ spec:
                 {{- toYaml .Values.resources | nindent 16 }}
 
               env:
-              {{- range $key,$value := .Values.envFromSecrets }}
-                - name: {{ $value.key | upper | quote}}
-                  valueFrom:
-                    secretKeyRef:
-                      name: {{ $value.from.secret | quote}}
-                      key: {{ $value.from.key | quote}}
-              {{- end }}
-              {{- range $key,$value := .Values.env }}
-                - name: {{ $key | upper | quote}}
-                  value: {{ required "All environment values have to be set." $value | quote}}
-              {{- end }}
+                {{- include "go-r53-ddns.envGen" .Values.cronConf.env | indent 16 -}}
+                {{- include "go-r53-ddns.envFromSecretGen" . | indent 16 -}}
 
           {{- with .Values.nodeSelector }}
           nodeSelector:
