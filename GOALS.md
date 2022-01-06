@@ -40,4 +40,15 @@ However, when I started creating my workflow it would throw an error: `Dockerfil
 Long story short: I resolved this with a `git mv` on a fresh clone.
 
 #### Helm
-Still to be done.
+My experience with Helm:
+- Installing some charts on my personal k8s cluster
+- Nothing else
+
+Currently I am working on a [bare metal raspberry pi k3s cluster](https://github.com/Scribbd/k8s-in-r7y-pi). And part of that project was figuring out a solution for keeping my Dynamically assigned IP by my ISP in check.
+
+Building a Helm chart is an experience on its own. It so is easy to fall into the I-could-do-this-better-if-I-generalise-it trap. And yes, I did fall in that trap.
+
+I encountered a lot of troubles with this one. Taking way more time than planned. This was mostly due to my personal k8s cluster
+
+To figure out:  
+`helm package` deployment package can be made so that you can add my repository to helm and just get it directly without git. I feel like this can be a new [workflow](#github-actions).

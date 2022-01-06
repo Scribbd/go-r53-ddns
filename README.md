@@ -3,7 +3,7 @@ An AWS Route53 DDNS updater program run in a K8s cronjob written in Golang.
 
 Uses https://checkip.amazonaws.com to check for IP. But this is configurable
 
-Check (My Goals)[./GOALS.md] to see my learning journey.
+Check [My Goals](./GOALS.md) to see my learning journey.
 
 ## Usage
 > THIS CODE IS NOT PRODUCTION READY. 
@@ -23,7 +23,9 @@ Get your image through either Docker Hub `docker pull scribbd/go-r53-ddns:latest
 Make certain you inject the right environment variables listed below.
 
 ### Helm
+No package is available yet to add through `helm repo add`. Installation is by cloning this repository, go into `./helm/go-r53-dns` and run `helm install go-r53-ddns . -n go-r53-ddns --create-namespace --atomic`.
 
+If your jobs quit with `Exit Code: 2` make certain you deployed a Secret, and have your environment variables set.
 
 ## Configuration
 Configuration is done through environment variables. Make certain you inject the variables in a secure way.
