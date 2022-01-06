@@ -69,7 +69,7 @@ jobs:
 
     - uses: wangyoucao577/go-release-action@v1.22
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.RELEASE_SECRET }}
         goos: ${{ matrix.goos }}
         goarch: ${{ matrix.goarch }}
         extra_files: LICENSE README.md
