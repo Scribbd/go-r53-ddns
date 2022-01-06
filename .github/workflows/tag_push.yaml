@@ -60,9 +60,9 @@ jobs:
       matrix:
         goos: [linux, windows]
         goarch: [amd64, arm, arm64]
-      exclude:
-        - goos: windows
-          goarch: [arm, arm64]
+        exclude:
+          - goos: windows
+            goarch: [arm, arm64]
 
     steps:
     - uses: actions/checkout@v2
