@@ -87,7 +87,7 @@ jobs:
         github_token: ${{ secrets.RELEASE_SECRET }}
         goos: ${{ matrix.goos }}
         goarch: ${{ matrix.goarch }}
-        goversion: env.GO_VERSION
+        goversion: latest
         project_path: ./golang/
         release_tag: "${{ env.GITHUB_REF_NAME }}"
 
