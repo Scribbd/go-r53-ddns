@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   ddns-job:
-    image: scribbd/go-r53-ddns:v0.1.1
+    image: go-r53-ddns:v0.2.0
     environment:
       - HOSTED_ZONE_ID=Z00284422N70TQP6B6C1
       - CLUSTER_DOMAIN=cluster.scribbd.cloud.
