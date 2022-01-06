@@ -1,5 +1,5 @@
 ---
-name: Tag Push = Build Publish
+name: Tag Push = Publish Release
 
 on:
   push:
@@ -9,6 +9,19 @@ on:
       - 'v*.*.*'
 
 jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Create new release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            README.md
+            LICENSE
+
   build-container:
     runs-on: ubuntu-latest
     env:
@@ -53,27 +66,6 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
-  build-executable:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        goos: [linux]
-        goarch: [amd64, arm, arm64]
-        include:
-          - goos: windows
-            goarch: amd64
-
-    steps:
-    - uses: actions/checkout@v2
-
-    - uses: wangyoucao577/go-release-action@v1.22
-      with:
-        github_token: ${{ secrets.RELEASE_SECRET }}
-        goos: ${{ matrix.goos }}
-        goarch: ${{ matrix.goarch }}
-        extra_files: LICENSE README.md
-        project_path: ./golang/
 
 #  update-helm:
 #    runs-on:
