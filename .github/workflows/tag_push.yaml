@@ -89,7 +89,7 @@ jobs:
         goarch: ${{ matrix.goarch }}
         goversion: env.GO_VERSION
         project_path: ./golang/
-        release-tag: "${{ env.GITHUB_REF_NAME }}"
+        release_tag: "${{ env.GITHUB_REF_NAME }}"
 
   package-helm:
     needs: build-container
