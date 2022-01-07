@@ -8,6 +8,7 @@ on:
     paths:
       - 'helm/**'
 
+jobs:
   package_helm:
     runs-on: ubuntu-latest
     steps:
