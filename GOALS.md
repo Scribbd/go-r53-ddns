@@ -39,7 +39,7 @@ However, when I started creating my workflow it would throw an error: `Dockerfil
 
 Long story short: I resolved this with a `git mv` on a fresh clone.
 
-#### Helm
+### Helm
 My experience with Helm:
 - Installing some charts on my personal k8s cluster
 - Nothing else
